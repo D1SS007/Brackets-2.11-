@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace ConsoleApp2._12
 {
@@ -6,36 +6,48 @@ namespace ConsoleApp2._12
     {
         static void Main(string[] args)
         {            
-            int halfBracketsCount = 0;
-            int fullBracketsCount = 0;
-            int amountOfRightBrackets = 0;
-            int amountOfLeftBrackets = 0;
+            int halfBrackets = 0;
+            int fullBrackets = 0;
+            int amountOfLeftBracket = 0;
+            int amountOfRightBracket = 0;
 
-            string  text = "(())";
+            string text = "(()(()))";
             
             foreach (var symbol in text)
-            {                    
-                Console.Write(symbol);
-                if (symbol == '(')
+            {
+                if (symbol == ')')
                 {
-                    amountOfLeftBrackets++;
-                    halfBracketsCount++;                                       
+                    halfBrackets--;
+                    amountOfRightBracket++;
                 }
-                else if (symbol == ')' || halfBracketsCount != 0)
+
+                if(symbol == '(')
                 {
-                    amountOfRightBrackets++;
-                    halfBracketsCount--;
-                    fullBracketsCount++;                    
-                }                
+                    halfBrackets++;
+                    amountOfLeftBracket++;
+                }
+
+                if(amountOfLeftBracket == amountOfRightBracket +1)
+                {
+                    fullBrackets++;
+                }
+
+                if(halfBrackets < 0)
+                {
+                    Console.WriteLine("error");
+                    break;
+                }
             }
-            if (amountOfRightBrackets == amountOfLeftBrackets)
+
+            if (halfBrackets > 0)
             {
-                Console.WriteLine("\nМаксимальная глубина скобок: " + fullBracketsCount);                
+                Console.WriteLine("error");
             }
-            else if(amountOfLeftBrackets != amountOfRightBrackets)
+
+            if(halfBrackets == 0)
             {
-                Console.WriteLine("\nНекорректное количество скобок");
-            }            
+                Console.WriteLine(fullBrackets);
+            }        
         }
     }
 }
